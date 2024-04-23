@@ -3,8 +3,10 @@ import React from 'react';
 import Board from '../board/Board';
 import SimpleButton from '../../../../album-project/src/components/buttons/SimpleButton/SimpleButton';
 
+import './Game-Style.css';
+
 const shuffleCards = (array) => {
-    for (let i = array.length - 1; i > 0; i --) {
+    for (let i = array.length - 1; i > 0; i--) {
         const x = Math.floor(Math.random() * (i + 1));
 
         [array[i], array[x]] = [array[x], array[i]];
@@ -13,8 +15,8 @@ const shuffleCards = (array) => {
     return array;
 };
 
-const gerenateCards = () => {
-    const values = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+const generateCards = () => {
+    const values = ['♥', '$', '▲', '♦', '♣', '♠', '♫', '♪'];
 
     const cards = values.map((value ) => ({
         value,
@@ -29,7 +31,7 @@ const gerenateCards = () => {
 };
 
 const Game = () => {
-    const [cards, setCards] = useState(gerenateCards());
+    const [cards, setCards] = useState(generateCards());
     const [flippedCards, setFlippedCards] = useState([]);
     const [remainingChances, setRemainingChances] = useState(6);
     
