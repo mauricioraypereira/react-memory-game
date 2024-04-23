@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import React from 'react';
+import PropTypes from 'prop-types';
 import Board from '../board/Board';
 import SimpleButton from '../../../../album-project/src/components/buttons/SimpleButton/SimpleButton';
 
@@ -111,6 +111,16 @@ const Game = ({ actualDificult, setDificult, playerChances, pairsQuantity }) => 
             )}
         </div>
     );
-}
+};
+
+Game.propTypes = {
+    actualDificult: PropTypes.shape({
+        value: PropTypes.string,
+        title: PropTypes.string
+    }).isRequired,
+    setDificult: PropTypes.func.isRequired,
+    playerChances: PropTypes.number.isRequired,
+    pairsQuantity: PropTypes.number.isRequired,
+};
 
 export default Game;

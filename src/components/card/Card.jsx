@@ -1,5 +1,4 @@
-import React from 'react';
-
+import PropTypes from 'prop-types';
 import './Card-Style.css';
 
 const Card = ({ card, onClick }) => {
@@ -9,5 +8,14 @@ const Card = ({ card, onClick }) => {
         </div>
     )
 }
+
+Card.propTypes = {
+    card: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        isFlipped: PropTypes.bool.isRequired,
+        value: PropTypes.number.isRequired,
+    }).isRequired,
+    onClick: PropTypes.func.isRequired,
+};
 
 export default Card;
