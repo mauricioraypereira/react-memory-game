@@ -3,7 +3,6 @@ import SimpleButton from './components/buttons/SimpleButton/SimpleButton';
 import Game from './components/game/Game';
 
 function App() {
-
     const [dificult, setDificult] = useState();
     const [playerChances, setPlayerChances] = useState();
     const [pairsQuantity, setPairsQuantity] = useState();
