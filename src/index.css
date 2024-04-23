@@ -9,11 +9,47 @@ body {
 }
 
 h1,
+h2,
 p {
     text-align: center;
     color: #202020;
 }
 
-h1 {
+h1, 
+h2 {
     margin-top: 10px;
+    white-space: pre-wrap;
+}
+
+h2 p {
+    display: inline-flex;
+}
+
+.main-menu {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.dificult-title {
+    font-weight: bold;
+}
+
+.dificult-title.easy{
+    color: #24adfc;
+}
+
+.dificult-title.normal{
+    color: #bdad1e;
+}
+
+.dificult-title.hard{
+    color: #fc6824;
+}
+
+.dificult-title.veryhard{
+    color: #d60d06;
 }

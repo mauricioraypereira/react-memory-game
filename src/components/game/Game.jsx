@@ -15,8 +15,8 @@ const shuffleCards = (array) => {
     return array;
 };
 
-const generateCards = () => {
-    const values = ['1', '2', '3', '4', '5', '6', '7', '8'];
+const generateCards = (pairsQuantity) => {
+    const values = Array(...Array(pairsQuantity).keys());
 
     const cards = values.map((value ) => ({
         value,
@@ -30,12 +30,13 @@ const generateCards = () => {
     return shuffleCards(duplicatedCards);
 };
 
-const Game = () => {
-    const DEFAULT_PLAYER_CHANCES = 6;
+const Game = ({ actualDificult, setDificult, playerChances, pairsQuantity }) => {
+    const PLAYER_CHANCES = playerChances;
     
-    const [cards, setCards] = useState(generateCards());
+    const [cards, setCards] = useState(generateCards(pairsQuantity));
     const [flippedCards, setFlippedCards] = useState([]);
-    const [remainingChances, setRemainingChances] = useState(DEFAULT_PLAYER_CHANCES);
+    const [remainingChances, setRemainingChances] = useState(PLAYER_CHANCES);
+    const [giveup, setGiveup] = useState(false);
     
     const gameResult = cards.filter((card) => card.isFlipped).length;
 
@@ -73,22 +74,41 @@ const Game = () => {
     }
 
     const resetGame = () => {
-        setRemainingChances(DEFAULT_PLAYER_CHANCES);
+        setRemainingChances(PLAYER_CHANCES);
+        setDificult(null);
         setFlippedCards([]);
         setCards(generateCards());
     }
 
+    const showAllCards = (giveup) => {
+        const resetCards = cards.map((card) => {
+            return { ...card, isFlipped: true }
+        });
+
+        setGiveup(giveup);
+
+        setCards(resetCards);
+    }
+
     return (
         <div className="game-container">
-            <Board cards={cards} onCardClick={handleCardClick} />
+            <Board cards={cards} onCardClick={handleCardClick} actualDificult={actualDificult} />
             {remainingChances === 0 ? (
                 <p>Suas tentativas acabaram, fim de jogo!</p>
+            ) : giveup === true ? (
+                <p>Você desistiu</p>
             ) : gameResult === cards.length ? (
                 <p>Parabéns você venceu!</p>
             ) : (
-                <p>Você possui {remainingChances} tentativa(s) restante(s)...</p>
+                <>
+                    <p>Você possui {remainingChances} tentativa(s) restante(s)...</p>
+                    <SimpleButton content="Desistir" onClick={() => showAllCards(true)}/>
+                </>
             )}
-            <SimpleButton content="Reiniciar o jogo" onClick={resetGame}/>
+            <SimpleButton content="Voltar ao Menu Principal" onClick={resetGame}/>
+            {remainingChances === 0 && (
+                <SimpleButton content="Revelar as cartas restantes" onClick={() => showAllCards(false)}/>
+            )}
         </div>
     );
 }
