@@ -25,7 +25,7 @@ const generateCards = () => {
 
     const duplicatedCards = cards
         .concat([...cards])
-        .map((card, index) => ({ ...card, index }));
+        .map((card, index) => ({ ...card, id: index }));
     
     return shuffleCards(duplicatedCards);
 };
@@ -37,9 +37,42 @@ const Game = () => {
     
     const gameResult = cards.filter((card) => card.isFlipped).length;
 
+    const handleCardClick = (clickedCard) => {
+        if (remainingChances === 0)  return;
+
+        if (flippedCards.length === 2)  return;
+
+        const newCards = cards.map((card) => {
+            return card.id === clickedCard.id 
+            ? { ...card, isFlipped: true }
+            : card;
+        });
+
+        setCards(newCards);
+        setFlippedCards([...flippedCards, clickedCard]);
+
+        if (flippedCards.length === 1) {
+            setTimeout(() => {
+                const [firstCard] = flippedCards;
+
+                if (firstCard.value !== clickedCard.value) {
+                    const resetCards = cards.map((card) => {
+                        return card.id === firstCard.id || card.id === clickedCard.id
+                        ? { ...card, isFlipped: false }
+                        : card;
+                    });
+
+                    setCards(resetCards);
+                    setRemainingChances((prev) => prev - 1);
+                }
+                setFlippedCards([]);
+            }, 800)
+        }
+    }
+
     return (
         <div className="game-container">
-            <Board cards={cards} />
+            <Board cards={cards} onCardClick={handleCardClick} />
             {remainingChances === 0 ? (
                 <p>Suas tentativas acabaram, fim de jogo!</p>
             ) : gameResult === cards.length ? (

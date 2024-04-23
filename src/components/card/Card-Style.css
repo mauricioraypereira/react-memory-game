@@ -7,6 +7,7 @@
     font-size: 24px;
     font-weight: bold;
     background-color: #57b64f;
+    border: 1px solid #57b64f;
     color: #fff;
     cursor: pointer;
     border-radius: 5px;
@@ -15,10 +16,12 @@
 
 .card-container.flipped {
     background-color: #fff;
+    border: 1px solid #57b64f;
     color: #57b64f;
 }
 
 .card-container:hover {
     background-color: #39702b;
+    border: 1px solid #39702b;
     color: #fff;
 }

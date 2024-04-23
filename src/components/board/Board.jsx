@@ -3,11 +3,11 @@ import Card from '../card/Card';
 
 import './Board-Style.css';
 
-const Board = ({cards}) => {
+const Board = ({ cards, onCardClick }) => {
     return (
         <div className="board-container">
             {cards.map((card) => (
-                <Card key={card.id} card={card}/>
+                <Card key={card.id} card={card} onClick={onCardClick}/>
             ))}
         </div>
     );
