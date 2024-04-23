@@ -16,7 +16,7 @@ const shuffleCards = (array) => {
 };
 
 const generateCards = () => {
-    const values = ['♥', '$', '▲', '♦', '♣', '♠', '♫', '♪'];
+    const values = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
     const cards = values.map((value ) => ({
         value,
@@ -31,9 +31,11 @@ const generateCards = () => {
 };
 
 const Game = () => {
+    const DEFAULT_PLAYER_CHANCES = 6;
+    
     const [cards, setCards] = useState(generateCards());
     const [flippedCards, setFlippedCards] = useState([]);
-    const [remainingChances, setRemainingChances] = useState(6);
+    const [remainingChances, setRemainingChances] = useState(DEFAULT_PLAYER_CHANCES);
     
     const gameResult = cards.filter((card) => card.isFlipped).length;
 
@@ -66,8 +68,14 @@ const Game = () => {
                     setRemainingChances((prev) => prev - 1);
                 }
                 setFlippedCards([]);
-            }, 800)
+            }, 600)
         }
+    }
+
+    const resetGame = () => {
+        setRemainingChances(DEFAULT_PLAYER_CHANCES);
+        setFlippedCards([]);
+        setCards(generateCards());
     }
 
     return (
@@ -80,7 +88,7 @@ const Game = () => {
             ) : (
                 <p>Você possui {remainingChances} tentativa(s) restante(s)...</p>
             )}
-            <SimpleButton content="Reiniciar o jogo" />
+            <SimpleButton content="Reiniciar o jogo" onClick={resetGame}/>
         </div>
     );
 }
